@@ -2,6 +2,8 @@ import { writable } from 'svelte/store';
 
 export const text = writable('');
 
+export const saveTrigger = writable(true);
+
 export const RandomString = () => {
 	let result = '';
 	const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';

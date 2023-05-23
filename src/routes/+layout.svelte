@@ -7,6 +7,7 @@
 	import FloppyDisk from 'phosphor-svelte/lib/FloppyDisk';
 	import PlusCircle from 'phosphor-svelte/lib/PlusCircle';
 	import { RandomString, text } from '$lib/helper';
+	import { saveTrigger } from '$lib/helper';
 	import { supabase } from '$lib/supaBase';
 	import { goto } from '$app/navigation';
 
@@ -19,6 +20,10 @@
 		const { data, error } = await supabase.from('urls').insert([{ url: key, text: $text }]);
 		goto('/' + key);
 	}
+
+	function handleSave() {
+		if ($saveTrigger) save();
+	}
 </script>
 
 <Toast />
@@ -28,10 +33,10 @@
 			<svelte:fragment slot="lead">ASHBIN</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<div class="flex gap-3">
-					<button class="btn-sm variant-filled-primary" on:click={save}>
+					<button class="btn-sm variant-filled-primary" on:click={handleSave}>
 						<FloppyDisk size={20} />
 					</button>
-					<a href="/" class="btn-sm variant-filled-primary">
+					<a href="/" class="btn-sm variant-filled-primary" on:click={() => saveTrigger.set(true)}>
 						<PlusCircle size={20} />
 					</a>
 				</div>
