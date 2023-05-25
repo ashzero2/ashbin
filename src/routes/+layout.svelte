@@ -13,10 +13,13 @@
 
 	async function save() {
 		let key = RandomString();
+		navigator.clipboard.writeText('https://bin.ashzero.dev/' + key);
+
 		const t: ToastSettings = {
 			message: 'URL copied to clipboard'
 		};
 		toastStore.trigger(t);
+
 		const { data, error } = await supabase.from('urls').insert([{ url: key, text: $text }]);
 		goto('/' + key);
 	}
